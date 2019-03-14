@@ -45,7 +45,7 @@ for author in training_files:
             
 
 def MakeIntoTextList(lines):
-    print(lines[0:100])
+    #print(lines[0:100])
     text = []
     for word in re.split("[, \ - ! ? ; : ( ) .]+", lines):
         if len(word.strip()) > 0:
@@ -93,8 +93,6 @@ words = 0
 lines = 0
 while len(out) < 1390:
     out = out + current_word + " "
-    if random.randint(0,5) > 4:
-        out = out + '\n'
     #our first word should always be in here
     if current_word in d.keys():
         r = random.randint(0, len(d[current_word])-1)
