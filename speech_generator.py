@@ -83,25 +83,35 @@ for dataset in training_texts:
     dictionaries.append([dataset[0], MakeTree(dataset[2])])
 
 # make our text
-d= dictionaries[-1][1]
-k = sorted(d.keys())
-out = ""
-r = random.randint(0, len(d['start'])-1)
-current_word=d['start'][r]
-words = 0
+def MakeText(num_chars = 1390, dict_index = -1):
 
-lines = 0
-while len(out) < 1390:
-    out = out + current_word + " "
-    #our first word should always be in here
-    if current_word in d.keys():
-        r = random.randint(0, len(d[current_word])-1)
-        current_word = d[current_word][r]
-    else: #seed a new sentence
-        lines = lines +1
-        #r = np.random.randint(0, len(d['start']))
-        current_word = k[random.randint(0,len(k)-1)]
-    words = words +1
+    d= dictionaries[dict_index][1]
+    k = sorted(d.keys())
+    out = ""
+    r = random.randint(0, len(d['start'])-1)
+    current_word=d['start'][r]
+    words = 0
+    
+    lines = 0
+    while len(out) < num_chars:
+        out = out + current_word + " "
+        #our first word should always be in here
+        if current_word in d.keys():
+            r = random.randint(0, len(d[current_word])-1)
+            current_word = d[current_word][r]
+        else: #seed a new sentence
+            lines = lines +1
+            #r = np.random.randint(0, len(d['start']))
+            current_word = k[random.randint(0,len(k)-1)]
+        words = words +1
+    return out
+    
+    
+print(MakeText(1980))
+for i in range(len(dictionaries)):
+    f=open(str(i)+".txt", 'w')
+    f.write(files_list[i] + '\n')
+    f.write(MakeText(1390, i))
+    f.close()
 
-print(out)
 raw_input('here')
