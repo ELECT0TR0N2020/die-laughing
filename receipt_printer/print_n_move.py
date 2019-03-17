@@ -56,13 +56,17 @@ if FILE_READ_ORDER == 'random':
 
 # The full filepath of the file we're going to print and maybe move today
 file = os.path.join(SOURCE_DIRECTORY, allFiles[0])
+print(allFiles[0] + "\n")
 
-
-# Print the entire contents of file to stdout
-with open(file,'r', encoding='utf8') as f: # Use file to refer to the file object
-	print(f.read(), end="")
-
-# Move the file afterwards if the flag is set
+# Move the file if the flag is set.
+# If we do run into an issue reading a file, waiting to move it until after a print can get us hung up. 
+# Move the file to our old folder, read it from there to print it. I know it's opposite of what the docs say. 
 if MOVE_AFTER_PRINT:
 	destination = os.path.join(DESTINATION_DIRECTORY, allFiles[0])
 	os.rename(file, destination)
+
+# Print the entire contents of file to stdout
+with open(destination,'r', encoding='utf8') as f: # Use 'f' to refer to the file object
+	print(f.read(), end="")
+
+
